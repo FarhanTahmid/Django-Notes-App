@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
+from .models import UserInfo
 # Create your views here.
 
 def landingPage(request):
@@ -32,6 +33,10 @@ def signup(request):
             else:
                 new_user=User.objects.create_user(username=username,email=email,password=password)
                 new_user.save()
+                
+                new_user_for_table=UserInfo.objects.create(email=email,username=username)
+                new_user_for_table.save()
+                print("User stored in database")
                 messages.success(request,"Account Created Successfully")
                 return redirect('UserData:login')
         else:
