@@ -15,7 +15,7 @@ def login(request):
         user=auth.authenticate(username=username,password=password)
         if user is not None:
             auth.login(request,user)
-            print("User Logged in")
+            return redirect('UserData:notes_home',username)
         else:
             print("Credentials dont match")
             
@@ -43,5 +43,8 @@ def signup(request):
             messages.error(request,"Two Passwords do not match")
     return render(request,'signup.html')
 
-def notes_home(request):
-    return render(request,'notes_home.html')
+def notes_home(request,username):
+    context={
+        'username2':username
+    }
+    return render(request,'notes_home.html',context=context)
