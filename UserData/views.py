@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
 from .models import UserInfo
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def landingPage(request):
@@ -43,7 +44,13 @@ def signup(request):
             messages.error(request,"Two Passwords do not match")
     return render(request,'signup.html')
 
+def logout(request):
+    auth.logout(request)
+    return redirect('UserData:login')
+
+@login_required
 def notes_home(request,username):
+    
     context={
         'username2':username
     }
