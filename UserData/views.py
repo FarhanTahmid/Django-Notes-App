@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
-from .models import UserInfo
+from .models import UserInfo,UserNotes
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -50,8 +50,27 @@ def logout(request):
 
 @login_required
 def notes_home(request,username):
-    
+    get_all_notes=UserNotes.objects.filter(username=username)
+    print(get_all_notes)
     context={
-        'username2':username
+        'username2':username,
+        'all_notes':get_all_notes,
     }
     return render(request,'notes_home.html',context=context)
+
+@login_required
+def add_note(request,username):
+    if request.method=="POST":
+        title=request.POST['title']
+        note_description=request.POST['note_description']
+        image_file=request.FILES['image']
+        
+        new_note=UserNotes.objects.create(
+            title=title,description=note_description,image=image_file,username=UserInfo.objects.get(username=username)
+        )
+        new_note.save()
+        return redirect('UserData:notes_home',username)
+        print("notes taken")
+        
+        
+    return render(request,'add_note.html')

@@ -12,7 +12,7 @@
     <div class="user_side">
         <h1 class="w">Welcome {{username2}}</h1>
         <div class="create_note">
-            <button class="btn btn-outline-success txt-success rounded buttons">Take a New Note</button>
+            <a href="{% url 'UserData:add_note' username2 %}" class="btn btn-outline-success txt-success rounded buttons">Take a New Note</a>
         </div>
         <div class="logout">
             <a href="{% url 'UserData:logout' %}" class="btn btn-outline-danger txt-danger rounded buttons">Logout</a>
@@ -32,27 +32,21 @@
                 <table class="table table-bordered m-0 table7" style="text-align:center;" id="notesTable">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th style="text-align:center;">Title</th>
                             <th style="text-align:center;">Notes</th>
                             <th style="text-align:center;">Labels</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for note in all_notes %}
                         <tr>
-                            <td><a href="note_description.html">Example Title</a></td>
-                            <td>Example Description</td>
-                            <td>Example Label</td>
+                            <td><a href="note_description.html">{{note.pk}}</a></td>
+                            <td>{{note.title}}</a></td>
+                            <td>{{note.description}}</td>
                         </tr>
-                        <tr>
-                            <td>Example Title2</td>
-                            <td>Example Description2</td>
-                            <td>Example Label</td>
-                        </tr>
-                        <tr>
-                            <td>Example Title</td>
-                            <td>Example Description</td>
-                            <td>Example Label</td>
-                        </tr>
+                        {% endfor %}
+                        
                         <!-- Add more rows as needed -->
                     </tbody>
                 </table>

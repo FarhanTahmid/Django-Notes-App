@@ -128,3 +128,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL='UserData:login'
 
+#media files
+
+MEDIA_ROOT=os.path.join(BASE_DIR,'UserNotePictures/')
+MEDIA_URL="/media_files/"
+
